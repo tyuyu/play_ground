@@ -5,18 +5,22 @@ package number
 
 func majorityElement(nums []int) int {
 	half := len(nums) / 2
-	v := make(map[int]int, 0)
+	major := 0
+	c := 0
 	for _, num := range nums {
-		c, ok := v[num]
-		if !ok {
-			v[num] = 1
+		if c == 0 {
+			major = num
+			c++
 			continue
 		}
-		c++
 		if c > half {
-			return num
+			return major
 		}
-		v[num] = c
+		if num == major {
+			c++
+		} else {
+			c--
+		}
 	}
-	return nums[len(nums)-1]
+	return major
 }
