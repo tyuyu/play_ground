@@ -22,13 +22,13 @@ type Trie struct {
 	next  map[rune]*Trie
 }
 
-/** Initialize your data structure here. */
-func Constructor() Trie {
-	return Trie{
-		isEnd: false,
-		next:  make(map[rune]*Trie),
-	}
-}
+///** Initialize your data structure here. */
+//func Constructor() Trie {
+//	return Trie{
+//		isEnd: false,
+//		next:  make(map[rune]*Trie),
+//	}
+//}
 
 /** Inserts a word into the trie. */
 func (t *Trie) Insert(word string) {
