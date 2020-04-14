@@ -32,3 +32,32 @@ func wiggleSort(nums []int) {
 		j += 2
 	}
 }
+
+func findDuplicate(nums []int) int {
+	m := make(map[int]struct{}, 0)
+	for _, num := range nums {
+		if _, ok := m[num]; ok {
+			return num
+		}
+		m[num] = struct{}{}
+	}
+	return 0
+}
+
+func countSmaller(nums []int) []int {
+	count := make([]int, len(nums))
+	for i, num := range nums {
+		if i == len(nums)-1 {
+			break
+		}
+		c := 0
+		for _, i3 := range nums[i:] {
+			if i3 < num {
+				c++
+			}
+		}
+		count[i] = c
+	}
+
+	return count
+}
