@@ -30,38 +30,36 @@ import (
 //
 //输出: 42
 
-func maxPathSum(root *TreeNode) int {
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+var res int
+
+func maxPathSum(root *TreeNode) (sum int) {
 	if root == nil {
 		return 0
 	}
-	max := math.MinInt64
-	dsf(root, &max)
-	return max
+	res = math.MinInt64 //用来判断 所有节点都是负数时，应返回哪一个。
+	dfs(root)
+	return res
 }
 
-func dsf(root *TreeNode, max *int) int {
+func dfs(root *TreeNode) (sum int) {
 	if root == nil {
-		return 0
+		return
 	}
-	l, r := dsf(root.Left, max), dsf(root.Right, max)
-	var m int
-	if root.Val < 0 {
-		if root.Left != nil && root.Right != nil {
-			m = int(math.Max(float64(l), float64(r)))
-		} else if root.Left == nil && root.Right == nil {
-			m = root.Val
-		} else if root.Left == nil {
-			m = int(math.Max(float64(root.Val), float64(r)))
-		} else {
-			m = int(math.Max(float64(l), float64(root.Val)))
-		}
-	} else {
-		res := []int{root.Val, root.Val + l + r, root.Val + r, root.Val + l}
-		sort.Ints(res)
-		m = res[len(res)-1]
-	}
-	if m > *max {
-		*max = m
-	}
-	return m
+	lMax := max(0, dfs(root.Left))     //左分支 最大贡献
+	rMax := max(0, dfs(root.Right))    //右分支 最大贡献
+	res = max(res, root.Val+lMax+rMax) //与当前结果对比
+	return root.Val + max(lMax, rMax)  //返回单分支最大值
+}
+
+func max(nums ...int) int {
+	sort.Ints(nums)
+	return nums[len(nums)-1]
 }
