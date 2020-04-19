@@ -57,7 +57,7 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 			findSet, resultSet = resultSet, findSet
 		}
 		tmp := make(map[string]struct{})
-		for f, _ := range findSet {
+		for f := range findSet {
 			fb := []byte(f)
 			for i := range fb {
 				for j := 'a'; j <= 'z'; j++ {
