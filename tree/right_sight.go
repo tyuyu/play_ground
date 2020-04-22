@@ -1,5 +1,7 @@
 package tree
 
+import "math"
+
 //给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
 //
 //示例:
@@ -58,4 +60,32 @@ func deph(root *TreeNode, levels *[][]int, deep int) {
 //2.3 MB
 //, 在所有 Go 提交中击败了
 //100.00%
+//的用户
+
+func reverse(x int) int {
+
+	res := 0
+	for x != 0 {
+		c := x % 10
+		res = res*10 + c
+		x = x / 10
+	}
+	if res > math.MaxInt32 || res < math.MinInt32 {
+		return 0
+	}
+	return res
+}
+
+//执行结果：
+//通过
+//显示详情
+//执行用时 :
+//0 ms
+//, 在所有 Go 提交中击败了
+//100.00%
+//的用户
+//内存消耗 :
+//2.2 MB
+//, 在所有 Go 提交中击败了
+//42.86%
 //的用户
