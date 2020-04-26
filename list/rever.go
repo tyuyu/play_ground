@@ -90,6 +90,5 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 			cur.Next = heap[0]
 		}
 	}
-
 	return np.Next
 }
