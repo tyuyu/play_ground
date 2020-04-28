@@ -1,6 +1,8 @@
 package m
 
-import "testing"
+import (
+	"testing"
+)
 
 func Test_waysToChange(t *testing.T) {
 	type args struct {
