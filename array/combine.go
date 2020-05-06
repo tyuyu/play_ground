@@ -34,3 +34,29 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 	}
 	return
 }
+
+func combine(n int, k int) [][]int {
+	nums := make([]int, 0)
+	for i := 1; i <= n; i++ {
+		nums = append(nums, i)
+	}
+	return deep(nums, k)
+}
+
+func deep(nums []int, k int) [][]int {
+	ans := make([][]int, 0)
+	if k == 1 {
+		for _, num := range nums {
+			ans = append(ans, []int{num})
+		}
+		return ans
+	}
+
+	for i, num := range nums {
+		for _, xx := range deep(nums[i+1:], k-1) {
+			ans = append(ans, append([]int{num}, xx...))
+		}
+	}
+
+	return ans
+}
