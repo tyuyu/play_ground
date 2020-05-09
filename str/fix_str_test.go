@@ -1,6 +1,9 @@
 package str
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func Test_isScramble(t *testing.T) {
 	type args struct {
@@ -28,4 +31,11 @@ func Test_isScramble(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestAny(t *testing.T) {
+
+	s := "12345"
+	tmp := s[1:3]
+	fmt.Println(tmp)
 }
