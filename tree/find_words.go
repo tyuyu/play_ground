@@ -195,3 +195,30 @@ func (t *trie) startsWith(prefix string) bool {
 	}
 	return true
 }
+
+func sortedArrayToBST(nums []int) *TreeNode {
+	if len(nums) == 0 {
+		return nil
+	}
+	m := len(nums) / 2
+	root := &TreeNode{
+		Val: nums[m],
+	}
+	left := nums[:m]
+	right := nums[m+1:]
+	it := root
+	for i := len(left) - 1; i >= 0; i-- {
+		it.Left = &TreeNode{
+			Val: left[i],
+		}
+		it = it.Left
+	}
+	it = root
+	for _, n := range right {
+		it.Right = &TreeNode{
+			Val: n,
+		}
+		it.Right = it
+	}
+	return root
+}
