@@ -1,4 +1,4 @@
-package dynamic
+package sub_sum
 
 func subarraySum(nums []int, k int) int {
 
