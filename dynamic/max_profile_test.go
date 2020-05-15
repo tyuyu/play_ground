@@ -1,6 +1,9 @@
 package dynamic
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 //给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
 //
@@ -55,6 +58,84 @@ func Test_maxProfit(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := maxProfit(tt.args.prices); got != tt.want {
 				t.Errorf("maxProfit() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_solve(t *testing.T) {
+	type args struct {
+		board [][]byte
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "case1",
+			args: args{
+				board: [][]byte{
+					{'X', 'X', 'X', 'X'},
+					{'X', 'O', 'O', 'X'},
+					{'X', 'X', 'O', 'X'},
+					{'X', 'O', 'X', 'X'},
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			solve(tt.args.board)
+		})
+	}
+}
+
+func TestKthLargest_Add(t *testing.T) {
+
+	m := make(map[int]bool, 0)
+	println(m[1])
+	m[2] = true
+	println(m[2])
+}
+
+func Test_cloneGraph(t *testing.T) {
+	type args struct {
+		node *Node
+	}
+
+	n1 := &Node{
+		Val: 1,
+	}
+	n2 := &Node{
+		Val: 2,
+	}
+	n3 := &Node{
+		Val: 3,
+	}
+	n4 := &Node{
+		Val: 4,
+	}
+	n1.Neighbors = []*Node{n2, n4}
+	n2.Neighbors = []*Node{n1, n3}
+	n3.Neighbors = []*Node{n2, n4}
+	n4.Neighbors = []*Node{n1, n3}
+	tests := []struct {
+		name string
+		args args
+		want *Node
+	}{
+		{
+			name: "",
+			args: args{
+				node: n1,
+			},
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := cloneGraph(tt.args.node); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("cloneGraph() = %v, want %v", got, tt.want)
 			}
 		})
 	}
