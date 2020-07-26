@@ -1,7 +1,5 @@
 package dynamic
 
-import "math"
-
 //最长连续序列
 //给定一个未排序的整数数组，找出最长连续序列的长度。
 //
@@ -86,26 +84,16 @@ func longestIncreasingPath(matrix [][]int) int {
 		return 0
 	}
 
-	dp := make([][]int, len(matrix))
-	for i := range dp {
-		dp[i] = make([]int, len(matrix[0]))
-		for j, _ := range dp[i] {
-			dp[i][j] = -1
-		}
+	ans := make([][]int, len(matrix))
+	for i := range ans {
+		ans[i] = make([]int, len(matrix[0]))
 	}
 
-	max := 0
-
-	for i := 0; i < len(matrix); i++ {
-		for j := 0; j < len(matrix[0]); j++ {
-			if dp[i][j] != -1 {
-				if max < dp[i][j] {
-					max = dp[i][j]
-				}
-				continue
-			}
-			v := dsf(matrix, i, j, dp)
-			if max < v {
+	max := 1
+	for i := range matrix {
+		for j := range matrix[i] {
+			v := calPath(i, j, ans, matrix)
+			if v > max {
 				max = v
 			}
 		}
@@ -114,41 +102,36 @@ func longestIncreasingPath(matrix [][]int) int {
 	return max
 }
 
-func dsf(matrix [][]int, i int, j int, dp [][]int) int {
+func calPath(i, j int, ans, matrix [][]int) int {
 
-	max := 1
-	//go up
-	if i > 0 && matrix[i][j] < matrix[i-1][j] {
-		if dp[i-1][j] != -1 {
-			max = dp[i-1][j] + 1
-		} else {
-			max = dsf(matrix, i-1, j, dp) + 1
-		}
+	if ans[i][j] > 0 {
+		return ans[i][j]
 	}
-	//go down
-	if i < len(matrix)-1 && matrix[i][j] < matrix[i+1][j] {
-		if dp[i+1][j] != -1 {
-			max = int(math.Max(float64(dp[i+1][j]+1), float64(max)))
-		} else {
-			max = int(math.Max(float64(dsf(matrix, i+1, j, dp)+1), float64(max)))
-		}
-	}
-	//go left
-	if j > 0 && matrix[i][j] < matrix[i][j-1] {
-		if dp[i][j-1] != -1 {
-			max = int(math.Max(float64(dp[i][j-1]+1), float64(max)))
-		} else {
-			max = int(math.Max(float64(dsf(matrix, i, j-1, dp)+1), float64(max)))
-		}
-	} //go right
-	if j < len(matrix[0])-1 && matrix[i][j] < matrix[i][j+1] {
-		if dp[i][j+1] != -1 {
-			max = int(math.Max(float64(dp[i][j+1]+1), float64(max)))
-		} else {
-			max = int(math.Max(float64(dsf(matrix, i, j+1, dp)+1), float64(max)))
-		}
+	cur := matrix[i][j]
+
+	left, right, up, down := 0, 0, 0, 0
+	if i > 0 && matrix[i-1][j] > cur {
+		up = calPath(i-1, j, ans, matrix)
 	}
 
-	dp[i][j] = max
-	return max
+	if i+1 < len(matrix) && matrix[i+1][j] > cur {
+		down = calPath(i+1, j, ans, matrix)
+	}
+
+	if j > 0 && matrix[i][j-1] > cur {
+		left = calPath(i, j-1, ans, matrix)
+	}
+
+	if j+1 < len(matrix[i]) && matrix[i][j+1] > cur {
+		right = calPath(i, j+1, ans, matrix)
+	}
+
+	max := 0
+	for _, v := range []int{up, down, left, right} {
+		if v > max {
+			max = v
+		}
+	}
+	ans[i][j] = max + 1
+	return max + 1
 }

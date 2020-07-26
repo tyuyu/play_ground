@@ -60,6 +60,5 @@ func jump(nums []int) int {
 		}
 		i = i + n
 	}
-
 	return count
 }

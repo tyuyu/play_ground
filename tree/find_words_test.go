@@ -103,3 +103,13 @@ func Test_sortedArrayToBST(t *testing.T) {
 		})
 	}
 }
+
+func TestSSS(t *testing.T) {
+
+	checkInclusion("ab", "eidboaoo")
+}
+
+func checkInclusion(s1 string, s2 string) bool {
+
+	return false
+}
